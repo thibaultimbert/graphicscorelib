@@ -15,8 +15,8 @@
 		<visible>true</visible>
 		<width>800</width>
 		<height>480</height>
-		<minSize>1024 768</minSize>
-		<maxSize>1024 768</maxSize>
+		<minSize>800 600</minSize>
+		<maxSize>800 600</maxSize>
 		<renderMode>direct</renderMode>
 	</initialWindow>
 </application>
