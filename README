@@ -1,5 +1,39 @@
 A Flash Platform SDK, a nice toolbox with libs for every ActionScript 3 developer.
 
+THIS SDK IS IN VERY EARLY DEVELOPMENT
+
+Current work items:
+- organize; move things out of top level packages. Add testing directories.
+- test framework for all tests.
+
+Current Projects:
+
+AGALMiniAssembler
+	The Mini assembler generates AGAL byte code from a simple
+	source text language. AGAL byte code is required for Molehill,
+	the Flash 3D API. The MiniAssembler is a run time assembler -
+	it is an AS3 class that is a part of your 3D app.
+	
+	Status: Beta, in use by early adopters
+	Test suite: TBD
+	
+AGALMacroAssembler
+	The Macro assembler extends the Mini assembler with macros (similar
+	to functions), basic math expressions, aliases, and constant allocation.
+	
+	Status: Alpha, initial testing (not yet uploaded)
+	Test suite: TBD
+	
+FractalGeometryGenerator
+	TBD
+	
+PerspectiveMatrix3D
+	A class for creating perspective matrices, for use in 3D applications.
+	
+	Status: Beta, in use by early adopters
+	Test suite: TBD
+	
+	
 
 Copyright (c) 2011, Adobe Systems Incorporated
 All rights reserved.
