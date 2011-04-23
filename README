@@ -32,6 +32,12 @@ PerspectiveMatrix3D
 
 	Status: Beta, in use by early adopters
 	Test suite: TBD
+	
+Sprite3D
+   A Sprite layer on top of the Molehill APIs (Stage3D).
+
+   Status: Beta, in use by early adopters
+   Test suite: TBD
 
 
 
