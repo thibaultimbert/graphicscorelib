@@ -34,10 +34,18 @@ PerspectiveMatrix3D
 	Test suite: TBD
 	
 Sprite3D
+<<<<<<< HEAD
 	A Sprite layer on top of the Molehill APIs (Stage3D).
 	
 	Status: Beta, in use by early adopters
 	Test suite: TBD
+=======
+    A Sprite layer on top of the Molehill APIs (Stage3D).
+
+    Status: Beta, in use by early adopters
+    Test suite: TBD
+
+>>>>>>> 1c2972e64dd2e193013f736d14e10cef4fbba1e6
 
 Copyright (c) 2011, Adobe Systems Incorporated
 All rights reserved.
