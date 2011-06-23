@@ -44,6 +44,13 @@ package com.adobe.utils
 	public class AGALMiniAssembler
 	{
 		// ======================================================================
+		//	Constants
+		// ----------------------------------------------------------------------
+		protected static const USE_NEW_SYNTAX:Boolean			= false;
+		
+		protected static const REGEXP_OUTER_SPACES:RegExp		= /^\s+|\s+$/g;
+		
+		// ======================================================================
 		//	Properties
 		// ----------------------------------------------------------------------
 		// AGAL bytes and error buffer 
@@ -53,6 +60,7 @@ package com.adobe.utils
 		private var debugEnabled:Boolean						= false;
 		
 		private static var initialized:Boolean					= false;
+		public var verbose:Boolean								= false;
 		
 		// ======================================================================
 		//	Getters
@@ -72,17 +80,17 @@ package com.adobe.utils
 		// ======================================================================
 		//	Methods
 		// ----------------------------------------------------------------------
-		public function assemble( mode:String, source:String, verbose:Boolean = false ):ByteArray
+		public function assemble( mode:String, source:String ):ByteArray
 		{
 			var start:uint = getTimer();
 			
-			_agalcode = new ByteArray();			
+			_agalcode							= new ByteArray();
 			_error = "";
 			
 			var isFrag:Boolean = false;
 			
 			if ( mode == FRAGMENT )
-				isFrag = true
+				isFrag = true;
 			else if ( mode != VERTEX )
 				_error = 'ERROR: mode needs to be "' + FRAGMENT + '" or "' + VERTEX + '" but is "' + mode + '".';
 			
@@ -101,6 +109,7 @@ package com.adobe.utils
 			for ( i = 0; i < lng && _error == ""; i++ )
 			{
 				var line:String = new String( lines[i] );
+				line = line.replace( REGEXP_OUTER_SPACES, "" );
 				
 				// remove comments
 				var startcomment:int = line.search( "//" );
@@ -170,11 +179,16 @@ package com.adobe.utils
 				}
 				
 				// get operands, use regexp
-				var regs:Array = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+				var regs:Array;
+				if ( USE_NEW_SYNTAX )
+					regs = line.match( /vc\[([vif][acost]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vif][acost]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+				else
+					regs = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+				
 				if ( regs.length != opFound.numRegister )
 				{
 					_error = "error: wrong number of operands. found "+regs.length+" but expected "+opFound.numRegister+".";
-					break;
+					break;					
 				}
 				
 				var badreg:Boolean	= false;
@@ -280,7 +294,7 @@ package com.adobe.utils
 						}
 						if ( !isDest )
 							for ( ; k <= 4; k++ )
-								regmask |= cv << ( ( k - 1 ) << 1 ) // repeat last								
+								regmask |= cv << ( ( k - 1 ) << 1 ); // repeat last								
 					}
 					else
 					{
@@ -481,12 +495,12 @@ package com.adobe.utils
 			REGMAP[ VA ]	= new Register( VA,	"vertex attribute",		0x0,	7,		REG_VERT | REG_READ );
 			REGMAP[ VC ]	= new Register( VC,	"vertex constant",		0x1,	127,	REG_VERT | REG_READ );
 			REGMAP[ VT ]	= new Register( VT,	"vertex temporary",		0x2,	7,		REG_VERT | REG_WRITE | REG_READ );
-			REGMAP[ OP ]	= new Register( OP,	"vertex output",		0x3,	0,		REG_VERT | REG_WRITE );
-			REGMAP[ V ]		= new Register( V,	"varying",				0x4,	7,		REG_VERT | REG_FRAG | REG_READ | REG_WRITE );
+			REGMAP[ VO ]	= new Register( VO,	"vertex output",		0x3,	0,		REG_VERT | REG_WRITE );
+			REGMAP[ I ]		= new Register( I,	"varying",				0x4,	7,		REG_VERT | REG_FRAG | REG_READ | REG_WRITE );
 			REGMAP[ FC ]	= new Register( FC,	"fragment constant",	0x1,	27,		REG_FRAG | REG_READ );
 			REGMAP[ FT ]	= new Register( FT,	"fragment temporary",	0x2,	7,		REG_FRAG | REG_WRITE | REG_READ );
 			REGMAP[ FS ]	= new Register( FS,	"texture sampler",		0x5,	7,		REG_FRAG | REG_READ );
-			REGMAP[ OC ]	= new Register( OC,	"fragment output",		0x3,	0,		REG_FRAG | REG_WRITE );
+			REGMAP[ FO ]	= new Register( FO,	"fragment output",		0x3,	0,		REG_FRAG | REG_WRITE );
 			
 			SAMPLEMAP[ D2 ]			= new Sampler( D2,			SAMPLER_DIM_SHIFT,		0 );
 			SAMPLEMAP[ D3 ]			= new Sampler( D3,			SAMPLER_DIM_SHIFT,		2 );
@@ -591,12 +605,12 @@ package com.adobe.utils
 		private static const VA:String							= "va";
 		private static const VC:String							= "vc";
 		private static const VT:String							= "vt";
-		private static const OP:String							= "op";
-		private static const V:String							= "v";
+		private static const VO:String							= USE_NEW_SYNTAX ? "vo" : "op";
+		private static const I:String							= USE_NEW_SYNTAX ? "i" : "v";
 		private static const FC:String							= "fc";
 		private static const FT:String							= "ft";
 		private static const FS:String							= "fs";
-		private static const OC:String							= "oc";
+		private static const FO:String							= USE_NEW_SYNTAX ? "fo" : "oc";
 		
 		// samplers
 		private static const D2:String							= "2d";
@@ -743,4 +757,4 @@ package com.adobe.utils
 			return "[Sampler name=\""+_name+"\", flag=\""+_flag+"\", mask="+mask+"]";
 		}
 	}
-	}
+}
