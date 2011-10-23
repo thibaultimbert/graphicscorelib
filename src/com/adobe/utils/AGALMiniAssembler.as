@@ -1,3 +1,10 @@
+/**
+ * 
+ *  This version of AGALMiniAssembler was modified on 10.23.11 by David Barlia
+ *  to fix an issue where RGBA component accessors were mishandled.
+ * 
+ */
+
 /*
 Copyright (c) 2011, Adobe Systems Incorporated
 All rights reserved.
@@ -181,9 +188,9 @@ package com.adobe.utils
 				// get operands, use regexp
 				var regs:Array;
 				if ( USE_NEW_SYNTAX )
-					regs = line.match( /vc\[([vif][acost]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vif][acost]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+					regs = line.match( /vc\[([vif][acost]?)(\d*)?(\.[xyzwrgba](\+\d{1,3})?)?\](\.[xyzwrgba]{1,4})?|([vif][acost]?)(\d*)?(\.[xyzwrgba]{1,4})?/gi );
 				else
-					regs = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+					regs = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzwrgba](\+\d{1,3})?)?\](\.[xyzwrgba]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzwrgba]{1,4})?/gi );
 				
 				if ( regs.length != opFound.numRegister )
 				{
@@ -263,7 +270,7 @@ package com.adobe.utils
 					}
 					
 					var regmask:uint		= 0;
-					var maskmatch:Array		= regs[j].match( /(\.[xyzw]{1,4})/ );
+					var maskmatch:Array		= regs[j].match( /(\.[xyzwrgba]{1,4})/ );
 					var isDest:Boolean		= ( j == 0 && !( opFound.flags & OP_NO_DEST ) );
 					var isSampler:Boolean	= ( j == 2 && ( opFound.flags & OP_SPECIAL_TEX ) );
 					var reltype:uint		= 0;
@@ -284,7 +291,7 @@ package com.adobe.utils
 						var maskLength:uint = maskmatch[0].length;
 						for ( var k:int = 1; k < maskLength; k++ )
 						{
-							cv = maskmatch[0].charCodeAt(k) - "x".charCodeAt(0);
+							cv = regIndex(maskmatch[0].charCodeAt(k));
 							if ( cv > 2 )
 								cv = 3;
 							if ( isDest )
@@ -312,14 +319,14 @@ package com.adobe.utils
 							break;
 						}
 						reltype = regFoundRel.emitCode;
-						var selmatch:Array = relreg[0].match( /(\.[xyzw]{1,1})/ );						
+						var selmatch:Array = relreg[0].match( /(\.[xyzwrgba]{1,1})/ );						
 						if ( selmatch.length==0 )
 						{
 							_error = "error: bad index register select"; 
 							badreg = true; 
 							break;						
 						}
-						relsel = selmatch[0].charCodeAt(1) - "x".charCodeAt(0);
+						relsel = regIndex(selmatch[0].charCodeAt(1));
 						if ( relsel > 2 )
 							relsel = 3; 
 						var relofs:Array = relreg[0].match( /\+\d{1,3}/ig );
@@ -441,6 +448,21 @@ package com.adobe.utils
 			
 			return agalcode;
 		}
+		
+		
+		private function regIndex(accessor:uint):uint {
+			var index:int = accessor - "x".charCodeAt(0);
+			if (index < 0) {
+				switch (accessor) {
+					case "r".charCodeAt(0):	index = 0;	break;
+					case "g".charCodeAt(0):	index = 1;	break;
+					case "b".charCodeAt(0):	index = 2;	break;
+					case "a".charCodeAt(0):	index = 3;	break;
+				}
+			}
+			return index;
+		}
+		
 		
 		static private function init():void
 		{
