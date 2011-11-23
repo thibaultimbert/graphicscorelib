@@ -50,6 +50,18 @@ package com.adobe.utils
 		
 		protected static const REGEXP_OUTER_SPACES:RegExp		= /^\s+|\s+$/g;
 		
+		protected static const COMPONENTS:Object				= {
+			120:0,	// x
+			121:1,	// y
+			122:2,	// z
+			123:3,	// w
+			
+			114:0,	// r
+			103:1,	// g
+			98:2,	// b
+			97:3	// a
+		};
+		
 		// ======================================================================
 		//	Properties
 		// ----------------------------------------------------------------------
@@ -181,9 +193,9 @@ package com.adobe.utils
 				// get operands, use regexp
 				var regs:Array;
 				if ( USE_NEW_SYNTAX )
-					regs = line.match( /vc\[([vif][acost]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vif][acost]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+					regs = line.match( /vc\[([vif][acost]?)(\d*)?(\.[xyzwrgba](\+\d{1,3})?)?\](\.[xyzwrgba]{1,4})?|([vif][acost]?)(\d*)?(\.[xyzwrgba]{1,4})?/gi );
 				else
-					regs = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+					regs = line.match( /vc\[([vof][actps]?)(\d*)?(\.[xyzwrgba](\+\d{1,3})?)?\](\.[xyzwrgba]{1,4})?|([vof][actps]?)(\d*)?(\.[xyzwrgba]{1,4})?/gi );
 				
 				if ( regs.length != opFound.numRegister )
 				{
@@ -263,7 +275,7 @@ package com.adobe.utils
 					}
 					
 					var regmask:uint		= 0;
-					var maskmatch:Array		= regs[j].match( /(\.[xyzw]{1,4})/ );
+					var maskmatch:Array		= regs[j].match( /(\.[xyzwrgba]{1,4})/ );
 					var isDest:Boolean		= ( j == 0 && !( opFound.flags & OP_NO_DEST ) );
 					var isSampler:Boolean	= ( j == 2 && ( opFound.flags & OP_SPECIAL_TEX ) );
 					var reltype:uint		= 0;
@@ -284,7 +296,7 @@ package com.adobe.utils
 						var maskLength:uint = maskmatch[0].length;
 						for ( var k:int = 1; k < maskLength; k++ )
 						{
-							cv = maskmatch[0].charCodeAt(k) - "x".charCodeAt(0);
+							cv = maskmatch[ 0 ].
 							if ( cv > 2 )
 								cv = 3;
 							if ( isDest )
@@ -312,14 +324,15 @@ package com.adobe.utils
 							break;
 						}
 						reltype = regFoundRel.emitCode;
-						var selmatch:Array = relreg[0].match( /(\.[xyzw]{1,1})/ );						
+						var selmatch:Array = relreg[0].match( /(\.[xyzwrgba]{1,1})/ );						
 						if ( selmatch.length==0 )
 						{
 							_error = "error: bad index register select"; 
 							badreg = true; 
 							break;						
 						}
-						relsel = selmatch[0].charCodeAt(1) - "x".charCodeAt(0);
+						
+						relsel = COMPONENTS[ selmatch[ 0 ].charCodeAt( 1 ) ];
 						if ( relsel > 2 )
 							relsel = 3; 
 						var relofs:Array = relreg[0].match( /\+\d{1,3}/ig );
