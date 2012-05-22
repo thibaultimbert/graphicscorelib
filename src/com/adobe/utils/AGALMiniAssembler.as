@@ -505,6 +505,8 @@ package com.adobe.utils
 			OPMAP[ SGE ] = new OpCode( SGE, 3, 0x29, 0 );
 			OPMAP[ SLT ] = new OpCode( SLT, 3, 0x2a, 0 );
 			OPMAP[ SGN ] = new OpCode( SGN, 2, 0x2b, 0 );
+			OPMAP[ SEQ ] = new OpCode( SEQ, 3, 0x2c, 0 );
+			OPMAP[ SNE ] = new OpCode( SNE, 3, 0x2d, 0 );
 			
 			REGMAP[ VA ]	= new Register( VA,	"vertex attribute",		0x0,	7,		REG_VERT | REG_READ );
 			REGMAP[ VC ]	= new Register( VC,	"vertex constant",		0x1,	127,	REG_VERT | REG_READ );
@@ -614,6 +616,8 @@ package com.adobe.utils
 		private static const SGE:String							= "sge";
 		private static const SLT:String							= "slt";
 		private static const SGN:String							= "sgn";
+		private static const SEQ:String							= "seq";
+		private static const SNE:String							= "sne";
 		
 		// registers
 		private static const VA:String							= "va";
