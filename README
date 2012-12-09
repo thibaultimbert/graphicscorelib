@@ -15,14 +15,12 @@ AGALMiniAssembler
 	it is an AS3 class that is a part of your 3D app.
 
 	Status: Beta, in use by early adopters
-	Test suite: TBD
 
 AGALMacroAssembler
 	The Macro assembler extends the Mini assembler with macros (similar
 	to functions), basic math expressions, aliases, and constant allocation.
 
 	Status: Alpha, initial testing (not yet uploaded)
-	Test suite: TBD
 
 FractalGeometryGenerator
 	TBD
