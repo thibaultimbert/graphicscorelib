@@ -14,13 +14,15 @@ AGALMiniAssembler
 	the Flash 3D API. The MiniAssembler is a run time assembler -
 	it is an AS3 class that is a part of your 3D app.
 
-	Status: Beta, in use by early adopters
+AGALMiniAssembler
+	The Mini assembler for Stage3D extended profile.
 
 AGALMacroAssembler
 	The Macro assembler extends the Mini assembler with macros (similar
 	to functions), basic math expressions, aliases, and constant allocation.
 
 	Status: Alpha, initial testing (not yet uploaded)
+	Test suite: TBD
 
 FractalGeometryGenerator
 	TBD
