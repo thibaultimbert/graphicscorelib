@@ -561,7 +561,7 @@ package com.adobe.utils.v3
 		private static const SAMPLEMAP:Dictionary				= new Dictionary();
 		
 		private static const MAX_NESTING:int					= 4;
-		private static const MAX_OPCODES:int					= 2048;
+		private static const MAX_OPCODES:int					= 4096;
 		
 		private static const FRAGMENT:String					= "fragment";
 		private static const VERTEX:String						= "vertex";
