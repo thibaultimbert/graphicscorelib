@@ -527,8 +527,8 @@ package com.adobe.utils.v3
 		
 			
 			SAMPLEMAP[ RGBA ]		= new Sampler( RGBA,		SAMPLER_TYPE_SHIFT,			0 );
-			SAMPLEMAP[ DXT1 ]		= new Sampler( DXT1,		SAMPLER_TYPE_SHIFT,			1 );
-			SAMPLEMAP[ DXT5 ]		= new Sampler( DXT5,		SAMPLER_TYPE_SHIFT,			2 );
+			SAMPLEMAP[ COMPRESSED ]		= new Sampler( COMPRESSED,		SAMPLER_TYPE_SHIFT,			1 );
+			SAMPLEMAP[ COMPRESSEDALPHA ]		= new Sampler( COMPRESSEDALPHA,		SAMPLER_TYPE_SHIFT,			2 );
 			SAMPLEMAP[ VIDEO ]		= new Sampler( VIDEO,		SAMPLER_TYPE_SHIFT,			3 );
 			SAMPLEMAP[ D2 ]			= new Sampler( D2,			SAMPLER_DIM_SHIFT,			0 );
 			SAMPLEMAP[ D3 ]			= new Sampler( D3,			SAMPLER_DIM_SHIFT,			2 );
@@ -670,8 +670,8 @@ package com.adobe.utils.v3
 		private static const REPEAT_U_CLAMP_V:String			= "repeat_u_clamp_v"; //Introduced by Flash 13
 		private static const CLAMP_U_REPEAT_V:String			= "clamp_u_repeat_v"; //Introduced by Flash 13
 		private static const RGBA:String						= "rgba";
-		private static const DXT1:String						= "dxt1";
-		private static const DXT5:String						= "dxt5";
+		private static const COMPRESSED:String						= "compressed";
+		private static const COMPRESSEDALPHA:String					= "compressedalpha";
 		private static const VIDEO:String						= "video";
 	}
 }
