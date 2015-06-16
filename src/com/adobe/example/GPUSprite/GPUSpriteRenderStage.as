@@ -58,7 +58,7 @@ package com.adobe.example.GPUSprite
             configureBackBuffer(rect.width, rect.height);
             
             _modelViewMatrix = new Matrix3D();
-            _modelViewMatrix.appendTranslation(-rect.width/2, -rect.height/2, 0);            
+            _modelViewMatrix.appendTranslation(-rect.width >> 1, -rect.height >> 1, 0);            
             _modelViewMatrix.appendScale(2.0/rect.width, -2.0/rect.height, 1);
         }
         
