@@ -189,7 +189,7 @@ package com.adobe.utils.v3
 				var regs:Array;
 				
 				// will match both syntax
-				regs = line.match( /vc\[([vof][acostdip]?)(\d*)?(\.[xyzw](\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vof][acostdip]?)(\d*)?(\.[xyzw]{1,4})?/gi );
+				regs = line.match( /vc\[([vofi][acostdip]?[d]?)(\d*)?((\.[xyzw])?(\+\d{1,3})?)?\](\.[xyzw]{1,4})?|([vofi][acostdip]?[d]?)(\d*)?(\.[xyzw]{1,4})?/gi );
 				
 				if ( !regs || regs.length != opFound.numRegister )
 				{
@@ -214,7 +214,7 @@ package com.adobe.utils.v3
 						isRelative = true;
 					}
 					
-					var res:Array = regs[j].match( /^\b[A-Za-z]{1,2}/ig );
+					var res:Array = regs[j].match( /^\b[A-Za-z]{1,3}/ig );
 					if ( !res ) 
 					{
 						_error = "error: could not parse operand "+j+" ("+regs[j]+").";
@@ -315,8 +315,8 @@ package com.adobe.utils.v3
 					
 					if ( isRelative )
 					{
-						var relname:Array = relreg[0].match( /[A-Za-z]{1,2}/ig );						
-						var regFoundRel:Register = REGMAP[ relname[0]];						
+						var relname:Array = relreg[0].match( /[A-Za-z]{1,3}/ig );
+						var regFoundRel:Register = REGMAP[ relname[0]];
 						if ( regFoundRel == null )
 						{ 
 							_error = "error: bad index register"; 
@@ -466,6 +466,7 @@ package com.adobe.utils.v3
 			REGMAP[ FS ]	= new Register( FS,	"texture sampler",		0x5,	ignorelimits?1024:7,						REG_FRAG | REG_READ );
 			REGMAP[ FO ]	= new Register( FO,	"fragment output",		0x3,	ignorelimits?1024:(version==1?0:3),			REG_FRAG | REG_WRITE );				
 			REGMAP[ FD ]	= new Register( FD,	"fragment depth output",0x6,	ignorelimits?1024:(version==1?-1:0),		REG_FRAG | REG_WRITE );
+			REGMAP[ IID ]	= new Register( IID,"instance id", 			0x7,	ignorelimits?1024:0,						REG_VERT | REG_READ );
 			
 			// aliases
 			REGMAP[ "op" ]	= REGMAP[ VO ];
@@ -647,7 +648,8 @@ package com.adobe.utils.v3
 		private static const FT:String							= "ft";
 		private static const FS:String							= "fs";
 		private static const FO:String							= "fo";			
-		private static const FD:String							= "fd"; 
+		private static const FD:String							= "fd";
+		private static const IID:String							= "iid";
 		
 		// samplers
 		private static const D2:String							= "2d";
