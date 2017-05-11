@@ -527,12 +527,18 @@ package com.adobe.utils
 			SAMPLEMAP[ NOMIP ]		= new Sampler( NOMIP,		SAMPLER_MIPMAP_SHIFT,		0 );
 			SAMPLEMAP[ NEAREST ]	= new Sampler( NEAREST,		SAMPLER_FILTER_SHIFT,		0 );
 			SAMPLEMAP[ LINEAR ]		= new Sampler( LINEAR,		SAMPLER_FILTER_SHIFT,		1 );
+			SAMPLEMAP[ ANISOTROPIC2X ]	= new Sampler( ANISOTROPIC2X, SAMPLER_FILTER_SHIFT, 2 );
+			SAMPLEMAP[ ANISOTROPIC4X ]	= new Sampler( ANISOTROPIC4X, SAMPLER_FILTER_SHIFT,	3 );
+			SAMPLEMAP[ ANISOTROPIC8X ]	= new Sampler( ANISOTROPIC8X, SAMPLER_FILTER_SHIFT,	4 );
+			SAMPLEMAP[ ANISOTROPIC16X ]	= new Sampler( ANISOTROPIC16X, SAMPLER_FILTER_SHIFT,5 );
 			SAMPLEMAP[ CENTROID ]	= new Sampler( CENTROID,	SAMPLER_SPECIAL_SHIFT,		1 << 0 );
 			SAMPLEMAP[ SINGLE ]		= new Sampler( SINGLE,		SAMPLER_SPECIAL_SHIFT,		1 << 1 );
 			SAMPLEMAP[ DEPTH ]		= new Sampler( DEPTH,		SAMPLER_SPECIAL_SHIFT,		1 << 2 );
 			SAMPLEMAP[ REPEAT ]		= new Sampler( REPEAT,		SAMPLER_REPEAT_SHIFT,		1 );
 			SAMPLEMAP[ WRAP ]		= new Sampler( WRAP,		SAMPLER_REPEAT_SHIFT,		1 );
 			SAMPLEMAP[ CLAMP ]		= new Sampler( CLAMP,		SAMPLER_REPEAT_SHIFT,		0 );
+			SAMPLEMAP[ CLAMP_U_REPEAT_V ]	= new Sampler( CLAMP_U_REPEAT_V, SAMPLER_REPEAT_SHIFT, 2 );
+			SAMPLEMAP[ REPEAT_U_CLAMP_V ]	= new Sampler( REPEAT_U_CLAMP_V, SAMPLER_REPEAT_SHIFT, 3 );
 		}
 		
 		// ======================================================================
@@ -641,12 +647,18 @@ package com.adobe.utils
 		private static const NOMIP:String						= "nomip";
 		private static const NEAREST:String						= "nearest";
 		private static const LINEAR:String						= "linear";
+		private static const ANISOTROPIC2X:String				= "anisotropic2x"; //Introduced by Flash 14
+		private static const ANISOTROPIC4X:String				= "anisotropic4x"; //Introduced by Flash 14
+		private static const ANISOTROPIC8X:String				= "anisotropic8x"; //Introduced by Flash 14
+		private static const ANISOTROPIC16X:String				= "anisotropic16x"; //Introduced by Flash 14
 		private static const CENTROID:String					= "centroid";
 		private static const SINGLE:String						= "single";
 		private static const DEPTH:String						= "depth";
 		private static const REPEAT:String						= "repeat";
 		private static const WRAP:String						= "wrap";
 		private static const CLAMP:String						= "clamp";
+		private static const REPEAT_U_CLAMP_V:String			= "repeat_u_clamp_v"; //Introduced by Flash 13
+		private static const CLAMP_U_REPEAT_V:String			= "clamp_u_repeat_v"; //Introduced by Flash 13
 		private static const RGBA:String						= "rgba";
 		private static const DXT1:String						= "dxt1";
 		private static const DXT5:String						= "dxt5";
